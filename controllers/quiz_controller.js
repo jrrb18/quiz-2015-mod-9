@@ -19,9 +19,9 @@ exports.index = function(req, res) {
 	models.Quiz.findAll(options).then(
   	function(quizes) {
     	if (req.query.search !== undefined) {
-        	console.log("Primero: "+req.query.search);
+        	//console.log("Primero: "+req.query.search);
         	req.query.search = req.query.search.replace(/^| |$/g,'%');
-        	console.log("Despues: "+req.query.search);
+        	//console.log("Despues: "+req.query.search);
         	models.Quiz.findAll({where: [ "pregunta like ?", req.query.search], order: [["pregunta"]]}).then(
          		function(quizes){
                   	res.render('quizes/index.ejs', {quizes: quizes});
