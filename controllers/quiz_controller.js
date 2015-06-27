@@ -22,7 +22,7 @@ exports.index = function(req, res) {
         	//console.log("Primero: "+req.query.search);
         	req.query.search = req.query.search.replace(/^| |$/g,'%');
         	//console.log("Despues: "+req.query.search);
-        	models.Quiz.findAll({where: [ "pregunta like ?", req.query.search], order: [["pregunta"]]}).then(
+        	models.Quiz.findAll({where: [ "lower(pregunta) like ?", req.query.search.toLowerCase()], order: [["pregunta"]]}).then(
          		function(quizes){
                   	res.render('quizes/index.ejs', {quizes: quizes});
           		});
