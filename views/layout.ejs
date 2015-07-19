@@ -16,6 +16,12 @@
 	<body>
 		<div id="page-wrap">
 			<header class="main" id="h1">
+				<%if(!session.user){%>
+					<span class="right"><a href="/login">Login</a></span>
+				<%}else{%>
+					<span class="right"><%=session.user.username%> <a href="/logout">Logout</a></span>
+				<%}%>
+
 				<h2>Quiz: El Juego de las Preguntas</h2>		
 			</header>
 
@@ -24,6 +30,7 @@
 				<span><a href="/quizes">Preguntas</a></span>
 				<!--<span><a href="/quizes/question">Preguntas</a></span> -->
 				<span><a href="/author">Créditos</a></span>
+				<span><a href="/quizes/statistics">Estadisticas</a></span>
 			</nav>
 			
 			<section class="main" id="s1">

@@ -12,7 +12,6 @@ var port     = (url[5] ||null);
 var host     = (url[4] ||null);
 var storage  = process.env.DATABASE_STORAGE
 
-
 // Cargar Modelo ORM
 var Sequelize = require('sequelize');
 
@@ -27,11 +26,23 @@ var sequelize  = new Sequelize(DB_name, user, pwd,
 		}
 	);
 
-// Importar la definicion de la tabbla  Quiz en quiz.js
-var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
+// Importar definicion de la tabla  Quiz en quiz.js
+var quiz_path = path.join(__dirname, 'quiz');
+var Quiz = sequelize.import(quiz_path);
 
-// exportar definición de tabla Quiz
+// Importar definicion de la tabla Comment en comment.js
+var comment_path = path.join(__dirname,'comment');
+var Comment = sequelize.import(comment_path);
+
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
+
+//var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
+
+// exportar definiciones de las tabla Quiz y Comment
 exports.Quiz = Quiz;
+exports.Comment = Comment;
+
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {

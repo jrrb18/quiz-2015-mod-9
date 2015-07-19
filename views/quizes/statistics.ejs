@@ -1,0 +1,27 @@
+<h3>Estadísticas</h3>
+<table class="tg">
+  <tr>
+    <th class="tg-i3z3">Renglones</th>
+    <th class="tg-i3z3">Valor</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">Cantidad de Preguntas</td>
+    <td class="tg-031e"><%= numQuestions %></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Total de Comentarios</td>
+    <td class="tg-031e"><%= numComments %></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Promedio de Comentarios por Pregunta</td>
+    <td class="tg-031e"><%= commentsAvg.toPrecision(3); %></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Numero de Preguntas sin Comentarios</td>
+    <td class="tg-031e"><%= numQuestionsWithoutComments %></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Numero de Preguntas con Comentarios</td>
+    <td class="tg-031e"><%= numQuestionsWithComments %></td>
+  </tr>
+</table>

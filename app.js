@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
-var methodOverride = require('method-override'); 
+var methodOverride = require('method-override');
+var session = require('express-session'); 
 
 var routes = require('./routes/index');
 
@@ -22,9 +23,48 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('Quiz 2015'));
+app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Helpers dinamicos:
+app.use(function(req, res, next) {
+
+  // guardar path en session.redir para despues de login
+  if(!req.path.match(/\/login|\/logout/)) {
+      req.session.redir = req.path;
+  }
+
+  // Hacer visible req.session en las vistas
+  res.locals.session = req.session;
+  next();
+
+});
+
+// Si el usuario no hace ninguna peticion durante 2 minutos es automaticamente 
+// deslogueado de la session y se le requiere volver a autenticarse.
+app.use(function(req,res,next){
+    if(req.session.user != null){
+        //console.log('Timme Passed init '+req.session.timepassed);
+        if(req.session.timepassed == null){
+  
+        } else {
+            var diff = process.hrtime(req.session.timepassed);
+            if(diff[0]>=120){
+                delete req.session.user;
+                res.redirect('/login');
+            }
+            
+        }
+        req.session.timepassed = process.hrtime();
+    }
+
+    next();
+});
+
+
+
 
 app.use('/', routes);
 
